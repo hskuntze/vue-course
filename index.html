@@ -5,34 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./vue.js"></script>
-    <style>
-        .c1 {
-            background-color: red;
-        }
-
-        .c2 {
-            background-color: darkgreen;
-        }
-    </style>
     <title>Document</title>
 </head>
 <body>
     <div id="app">
-        {{ mensagem }} <br>
-        {{ mensagem.substring(3) }} <br>
-        <input type="text" :value="mensagem" :class="1 == 1 ? 'c1' : classeTal"> <br>
-        <input type="text" :value="mensagem" :class="1 == 2 ? 'c1' : classeTal"> <br>
-        <input type="text" :value="mensagem" :class="testeExp ? 'c1' : classeTal"> <br>
+        <input id="texto" type="text" v-on:keyup="imprimir('Com parâmetro', valorX)"> <!-- sintaxe v-on -->
+        <input type="text" @keyup="imprimir()"> <!-- sintaxe sugar de v-on -->
+        <button @click="alerta($event)">Botão</button>
     </div>
     <script>
         options = {
             el: '#app',
             data: {
-                mensagem: 'Expressão',
-                classeTal: 'c2',
-                testeExp: true
+                valorX: false
             },
-            methods: {}
+            methods: {
+                imprimir(t, x){
+                    console.log(t);
+                    console.log(x);
+                    console.log(this.valorX);
+                },
+                alerta(evento){
+                    const text = document.querySelector('#texto');
+                    if(text.value == ''){
+                        text.value = 'mudou';
+                    } else {
+                        text.value = ''
+                    }
+                    console.log(evento);
+                }
+            }
         };
 
         const vue = new Vue(options);
