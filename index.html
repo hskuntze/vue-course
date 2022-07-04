@@ -5,17 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./vue.js"></script>
+    <style>
+        .c1 {
+            font-weight: bold;
+        }
+    </style>
     <title>Document</title>
 </head>
 <body>
     <div id="app">
-        <a v-bind:href="site">Site</a> <!-- a diretiva 'v-bind', que foi feita para elementos HTML, indica a instância do Vue, 
-                                            que está ligada ao elemento pai "app",
-                                            que faça a ligação entre o valor guardado no atributo da tag HTML
-                                            e o valor da variável de mesmo nome disponibilizada no Vue -->
-        <p v-bind:style="cor">Entendendo a diretiva V-Bind</p>
-        <input type="text" v-bind:placeholder="placeholder">
-        <input type="checkbox" v-bind:checked="checked">
+        <a :href="site">Site</a> <!-- ':' é a sintaxe reduzida de 'v-bind:' -->
+        <p :style="cor" :class="classe" class="c2">Entendendo a diretiva V-Bind</p> <!-- o Vue reconhece que, se tratando de classes, 
+                                                                                não há sobreposição nos atributos da tag mas um encadeamento,
+                                                                                uma vez que a sintade HTML de classes permite o uso encadeado,
+                                                                                por exemplo: 'btn btn-primary py-1 px-3'-->
+        <input type="text" :placeholder="placeholder" placeholder="Esse é a sobreposição"> <!-- já neste caso, a sobreposição acontece e dá preferência ao elemento mais a direita -->
+        <input type="text" placeholder="Esse será sobreposto" :placeholder="placeholder">
+        <input type="checkbox" :checked="checked">
     </div>
     <script>
         options = {
@@ -23,10 +29,11 @@
             data: {
                 site: 'https://hklearn.herokuapp.com',
                 cor: 'color: red',
+                classe: 'c1',
                 placeholder: "Preencher",
-                checked: true
+                checked: true,
             },
-            methods: {
+            methods: { 
             }
         };
 
