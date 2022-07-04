@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- estudar desenho da aula 1-08 -->
+    <div id="app">
+        {{mensagem}} <br><!-- sintaxe 'double mustache' {{ var }}; binding: vínculo de uma variável a um valor ou comportamento -->
+        Valor total: {{valorTotal}} <br>
+        Está logado? {{logado}} <br>
+        Valores do array 'valores': 
+        <pre>
+            {{valores[0]}} <!--  -->
+            {{valores[1]}}
+            {{valores[2]}}
+            {{valores[3]}}
+        </pre>
+        Perfil: <br>
+        Nome completo: {{perfil.nome + " " + perfil.sobrenome}} <br>
+        Cursos: <br>
+        <pre>
+            {{perfil.cursos[0].nome + " " + perfil.cursos[0].carga + " horas"}}
+            {{perfil.cursos[1].nome + " " + perfil.cursos[1].carga + " horas"}}
+            {{perfil.cursos[2].nome + " " + perfil.cursos[2].carga + " horas"}}
+        </pre>
+    </div>
+    <script>
+        options = {
+            el: '#app', //el -> elemento que o JS vai selecionar
+            data: { //data -> guarda as variáveis reativas da aplicação
+                mensagem: 'First Vue controled template',
+                valorTotal: 150.0,
+                logado: false,
+                valores: [
+                    '1', 
+                    '2',
+                    '3',
+                    3.1415
+                ],
+                perfil: {
+                    nome: 'Hassan',
+                    sobrenome: 'Kuntze',
+                    idade: 23,
+                    cursos: [
+                        { nome: 'Linguagem Java', carga: 50},
+                        { nome: 'Bootcamp Spring 3.0', carga: 160},
+                        { nome: 'Bootcamp React 3.0', carga: 160}
+                    ]
+                }
+            }
+        };
+
+        const vue = new Vue(options);
+
+        console.log(vue);
+    </script>
+</body>
+</html>
