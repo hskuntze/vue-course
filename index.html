@@ -7,34 +7,32 @@
     <script src="./vue.js"></script>
     <style>
         .c1 {
-            font-weight: bold;
+            background-color: red;
+        }
+
+        .c2 {
+            background-color: darkgreen;
         }
     </style>
     <title>Document</title>
 </head>
 <body>
     <div id="app">
-        <a :href="site">Site</a> <!-- ':' é a sintaxe reduzida de 'v-bind:' -->
-        <p :style="cor" :class="classe" class="c2">Entendendo a diretiva V-Bind</p> <!-- o Vue reconhece que, se tratando de classes, 
-                                                                                não há sobreposição nos atributos da tag mas um encadeamento,
-                                                                                uma vez que a sintade HTML de classes permite o uso encadeado,
-                                                                                por exemplo: 'btn btn-primary py-1 px-3'-->
-        <input type="text" :placeholder="placeholder" placeholder="Esse é a sobreposição"> <!-- já neste caso, a sobreposição acontece e dá preferência ao elemento mais a direita -->
-        <input type="text" placeholder="Esse será sobreposto" :placeholder="placeholder">
-        <input type="checkbox" :checked="checked">
+        {{ mensagem }} <br>
+        {{ mensagem.substring(3) }} <br>
+        <input type="text" :value="mensagem" :class="1 == 1 ? 'c1' : classeTal"> <br>
+        <input type="text" :value="mensagem" :class="1 == 2 ? 'c1' : classeTal"> <br>
+        <input type="text" :value="mensagem" :class="testeExp ? 'c1' : classeTal"> <br>
     </div>
     <script>
         options = {
             el: '#app',
             data: {
-                site: 'https://hklearn.herokuapp.com',
-                cor: 'color: red',
-                classe: 'c1',
-                placeholder: "Preencher",
-                checked: true,
+                mensagem: 'Expressão',
+                classeTal: 'c2',
+                testeExp: true
             },
-            methods: { 
-            }
+            methods: {}
         };
 
         const vue = new Vue(options);
