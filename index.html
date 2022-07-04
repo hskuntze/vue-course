@@ -9,59 +9,30 @@
 </head>
 <body>
     <div id="app">
-        {{ somar() }} <br>
-        {{ subtrair() }} <br>
-        {{ multiplicar() }} <br>
-        {{ dividir() }} <br>
-        {{ funcaoTal() }}
+        <a v-bind:href="site">Site</a> <!-- a diretiva 'v-bind', que foi feita para elementos HTML, indica a instância do Vue, 
+                                            que está ligada ao elemento pai "app",
+                                            que faça a ligação entre o valor guardado no atributo da tag HTML
+                                            e o valor da variável de mesmo nome disponibilizada no Vue -->
+        <p v-bind:style="cor">Entendendo a diretiva V-Bind</p>
+        <input type="text" v-bind:placeholder="placeholder">
+        <input type="checkbox" v-bind:checked="checked">
     </div>
     <script>
         options = {
             el: '#app',
             data: {
-                n1: 10,
-                n2: 2,
-                //somar: "Testando" -> isso gera conflito. um atributo de data não pode ter o mesmo nome que um atributo/função de methods
+                site: 'https://hklearn.herokuapp.com',
+                cor: 'color: red',
+                placeholder: "Preencher",
+                checked: true
             },
             methods: {
-                somar: function somar(){ //sintaxe convencional do JS para declarar funções
-                    return this.n1 + this.n2; //com atributo 'this' é possivel acessar os atributos de data por conta da instância do Vue
-                },
-                subtrair: function() { //sintaxe anônima
-                    return this.n1 - this.n2;
-                },
-                multiplicar: () => { //sintaxe arrow
-                    console.log(this);
-                    return this.n1 * this.n2; //erro léxico
-                },
-                /**
-                 *  Arrow functions não são interessantes para a criação de métodos:
-                 *  Elas não fazem referência para o escopo do objeto!
-                 *  Fazem referência ao objeto global do navegador ou ao escopo da função em si!
-                 **/
-                dividir() { //sintaxe direta para definir chave -> valor
-                    console.log(this);
-                    return this.n1 / this.n2;
-                },
-                funcaoTal() {
-                    const f = () => {
-                        console.log("--->", this);
-                        return 'Test';
-                    }
-
-                    console.log(f());
-                }
-                /**
-                 *!  É o mesmo que 
-                 *  
-                 **  divisao: function divisao() {
-                 **     etc.
-                 **  } 
-                 **/
             }
         };
 
         const vue = new Vue(options);
+
+        console.log(vue);
     </script>
 </body>
 </html>
