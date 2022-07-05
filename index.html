@@ -9,25 +9,105 @@
   </head>
   <body>
     <div id="app">
-      <p v-once>Saldo inicial: {{ balance }}</p>
-      <p>Saldo atualizado: {{ balance }}</p>
-      <input type="text" id="valor" />
-      <button @click="creditar()">Creditar</button>
-      <button @click="debitar()">Debitar</button>
+      <ul>
+        <li v-for="(curso, chave) in cursos" :key="chave">
+          {{chave+1}} - {{curso}}
+        </li>
+      </ul>
+      <hr />
+      <table style="border: 1px solid black">
+        <thead>
+          <th>ID</th>
+          <th>Titulo</th>
+          <th>Descrição</th>
+        </thead>
+        <tbody>
+          <!-- :key é o elemento identificador de cada renderização de listas -->
+          <tr v-for="(objeto, id) in objetos" :key="id">
+            <td v-text="id"></td>
+            <td v-text="objeto.title"></td>
+            <td v-text="objeto.description"></td>
+          </tr>
+          <!-- Desestruturado; cuidado com a desestruturação uma vez que o JS não faz inferência de tipo -->
+          <tr v-for="({title, description}, id) in objetos" :key="id">
+            <td v-text="id"></td>
+            <td v-text="title"></td>
+            <td v-text="description"></td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Renderizar elementos baseado em uma quantidade -->
+      <ul>
+        <li v-for="n in numero">{{n}}</li>
+      </ul>
+      <!-- Renderizar elementos adicionados -->
+      <ul>
+        <li v-for="c in comentarios">{{c.id}} - {{c.comentario}}</li>
+      </ul>
+      <input type="text" id="textoTal" />
+      <button @click="adicionar()">Adicionar</button>
+      <button @click="remover()">Remover</button>
+      <button @click="atualizar()">Atualizar</button>
     </div>
     <script>
       options = {
         el: "#app",
         data: {
-          balance: 10,
+          cursos: ["Java", "Spring", "React", "Vue", "HTML/CSS"],
+          objetos: {
+            1: {
+              title: "Laravel",
+              description: "Framework para PHP",
+            },
+            2: {
+              title: "Spring",
+              description: "Framework para Java",
+            },
+            x: {
+              title: "CSS",
+              description: "Ferramenta de estilização",
+            },
+          },
+          numero: 15,
+          comentarios: [
+            { id: 1, comentario: "Comment 1" },
+            { id: 2, comentario: "Comment 2" },
+            { id: 3, comentario: "Comment 3" },
+            { id: 4, comentario: "Comment 4" },
+          ],
         },
         methods: {
-          creditar() {
-            this.balance += Number(valor.value);
+          adicionar() {
+            objeto = {
+              id: this.comentarios.length + 1,
+              comentario: textoTal.value,
+            };
+            //this.comentarios[this.comentarios.length] = objeto; - O Vue não reconhece a reatividade disso
+            this.comentarios.push(objeto);
           },
 
-          debitar() {
-            this.balance -= Number(valor.value);
+          remover() {
+            this.comentarios.pop();
+          },
+
+          atualizar() {
+            /*
+             * O Vue não reconhece a reatividade disso
+             *
+             * this.comentarios[this.comentarios.length + 1] = {
+             *   id: this.comentarios.length + 1,
+             *   comentario: "Mudou",
+             * };
+             **/
+
+            /**
+             * Método nativo do Vue.js
+             * $set(<array>, <key>, <new_value>)
+             **/
+            this.$set(this.comentarios, 1, {
+              id: 2,
+              comentario: "Comentário 2 foi atualizado",
+            });
           },
         },
       };
