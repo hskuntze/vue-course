@@ -1,92 +1,89 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="./vue.js"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-        }
-
-        .base-card {
-            border: 1px solid #ccc;
-            border-radius: 15px;
-            box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.25);
-            background-color: #fff;
-        }
-
-        .div-principal {
-            width: 300px;
-            height: 300px;
-            padding: 10px;
-            margin: 30px 0px;
-        }
-
-        .div-sub {
-            width: 50px;
-            height: 50px;
-            padding: 10px;
-            margin: 15px 0px;
-        }
-
-        .red {
-            background-color: red;
-            color: black;
-        }
-
-        .blue {
-            background-color: blue;
-            color: white;
-        }
-
-        .white {
-            background-color: #fff;
-            color: black;
-        }
-    </style>
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="app">
-        <div class="div-principal base-card" :class="cor">
-            Cor: {{ cor }}
-            <br>
-            Posição X: {{x}} <br>
-            Posição Y: {{y}}<br>
-        </div>
-        <hr>
-        <div @click="mudarCor('red')" class="div-sub base-card"></div>
-        <div class="div-sub base-card" @mouseover="mudarCor('blue')" @mouseout="mudarCor('white')"></div> <!-- @mouseover não funciona no mobile por razões óbvias-->
-        <div class="div-sub base-card" @mousemove="coordenadas($event)"></div> <!-- $event é uma palavra reservada do Vue-->
+      <a
+        href="https://hklearn.herokuapp.com/"
+        target="_blank"
+        @click="preventDef($event)"
+      >
+        Link
+      </a>
+      <br />
+      <!-- É o mesmo que: -->
+      <a
+        href="https://hklearn.herokuapp.com/"
+        target="_blank"
+        @click.prevent="preventDef2()"
+      >
+        Link
+      </a>
+      <br />
+      <button @click.once="once()">Único</button>
+      <p>Contador: {{count}}</p>
+
+      <!-- Encadear modificadores -->
+
+      <form @submit.prevent.once="preventOnce()">
+        <button type="submit">Enviar</button>
+      </form>
+      <p>Formulário: {{form}}</p>
+      <br />
+      <!-- Modificador @keyup."tecla" significa que só dispara se o dígito for 't'-->
+      <input type="text" @keyup.t="captureKey($event)" />
+      <p>Teclas: {{ key }}</p>
+
+      <!-- Modificador @keyup."tecla" significa que só dispara se o dígito for 'Enter'-->
+      <input type="text" @keyup.Enter="captureKey($event)" />
+      <p>Teclas: {{ key }}</p>
+
+      <!-- Modificador @keyup."tecla" significa que só dispara se o dígito for 'Shift' seguido de 'Enter'-->
+      <input type="text" @keyup.Shift.Enter="captureKey($event)" />
+      <p>Teclas: {{ key }}</p>
     </div>
     <script>
-        options = {
-            el: '#app',
-            data: {
-                cor: 'white',
-                x: 0,
-                y: 0
-            },
-            methods: {
-                mudarCor(cor){
-                    this.cor = cor;
-                },
-                coordenadas(e) {
-                    this.x = e.x;
-                    this.y = e.y;
-                }
-            }
-        };
+      options = {
+        el: "#app",
+        data: {
+          msg: "",
+          count: 0,
+          form: "",
+          key: "",
+        },
+        methods: {
+          preventDef(event) {
+            event.preventDefault();
+            this.msg = "Default behavior";
+          },
 
-        const vue = new Vue(options);
+          preventDef2() {
+            this.msg = "Default behavior";
+          },
 
-        console.log(vue);
+          once() {
+            this.count++;
+          },
+
+          preventOnce() {
+            this.form = "Prevent once";
+          },
+
+          captureKey(event) {
+            this.key += event.key;
+          },
+        },
+      };
+
+      const vue = new Vue(options);
+
+      console.log(vue);
     </script>
-</body>
+  </body>
 </html>
