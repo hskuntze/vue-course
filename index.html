@@ -5,34 +5,81 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./vue.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+        }
+
+        .base-card {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.25);
+            background-color: #fff;
+        }
+
+        .div-principal {
+            width: 300px;
+            height: 300px;
+            padding: 10px;
+            margin: 30px 0px;
+        }
+
+        .div-sub {
+            width: 50px;
+            height: 50px;
+            padding: 10px;
+            margin: 15px 0px;
+        }
+
+        .red {
+            background-color: red;
+            color: black;
+        }
+
+        .blue {
+            background-color: blue;
+            color: white;
+        }
+
+        .white {
+            background-color: #fff;
+            color: black;
+        }
+    </style>
     <title>Document</title>
 </head>
 <body>
     <div id="app">
-        <input id="texto" type="text" v-on:keyup="imprimir('Com parâmetro', valorX)"> <!-- sintaxe v-on -->
-        <input type="text" @keyup="imprimir()"> <!-- sintaxe sugar de v-on -->
-        <button @click="alerta($event)">Botão</button>
+        <div class="div-principal base-card" :class="cor">
+            Cor: {{ cor }}
+            <br>
+            Posição X: {{x}} <br>
+            Posição Y: {{y}}<br>
+        </div>
+        <hr>
+        <div @click="mudarCor('red')" class="div-sub base-card"></div>
+        <div class="div-sub base-card" @mouseover="mudarCor('blue')" @mouseout="mudarCor('white')"></div> <!-- @mouseover não funciona no mobile por razões óbvias-->
+        <div class="div-sub base-card" @mousemove="coordenadas($event)"></div> <!-- $event é uma palavra reservada do Vue-->
     </div>
     <script>
         options = {
             el: '#app',
             data: {
-                valorX: false
+                cor: 'white',
+                x: 0,
+                y: 0
             },
             methods: {
-                imprimir(t, x){
-                    console.log(t);
-                    console.log(x);
-                    console.log(this.valorX);
+                mudarCor(cor){
+                    this.cor = cor;
                 },
-                alerta(evento){
-                    const text = document.querySelector('#texto');
-                    if(text.value == ''){
-                        text.value = 'mudou';
-                    } else {
-                        text.value = ''
-                    }
-                    console.log(evento);
+                coordenadas(e) {
+                    this.x = e.x;
+                    this.y = e.y;
                 }
             }
         };
