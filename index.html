@@ -9,34 +9,13 @@
   </head>
   <body>
     <div id="app">
-      <!--
-        Diferença entre V-Show e V-IF:
-          
-        O V-Show utiliza a propridade 'display' do HTML/CSS,
-        já o V-IF é uma *renderização* condicional. Caso a
-        expressão seja verdadeira uma *renderização* acontece
-        e se retornar falso ele não é renderizado.
-
-        O V-Show é muito mais rápido, pois só muda a propriedade
-        'display'. Se o trecho HTML não impactar na segurança,
-        é recomendado utilizar o V-Show.
-      -->
-      <p @mouseover="showTooltip = true" @mouseout="showTooltip = false">
-        Exemplo tooltip
-      </p>
-      <div v-show="showTooltip">
-        <h3>Siga essa dica</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae,
-          voluptatibus consequuntur id eligendi architecto asperiores!
-        </p>
-      </div>
+      <div v-html="elementoHTML"></div>
     </div>
     <script>
       options = {
         el: "#app",
         data: {
-          showTooltip: false,
+          elementoHTML: '<a href="https://hklearn.herokuapp.com/">Site</a>',
         },
         methods: {},
       };
