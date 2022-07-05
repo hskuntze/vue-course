@@ -8,56 +8,37 @@
     <title>Document</title>
   </head>
   <body>
-    <!-- Renderização condicional de elementos HTML com diretiva "V-IF" -->
     <div id="app">
-      <!-- v-if simples -->
-      <button @click="showBalance = !showBalance">
-        <span v-if="!showBalance">Exibir Saldo</span>
-        <span v-if="showBalance">Ocultar Saldo</span>
-      </button>
-      <p>Saldo: <span v-if="showBalance">R$ {{balance}}</span></p>
+      <!--
+        Diferença entre V-Show e V-IF:
+          
+        O V-Show utiliza a propridade 'display' do HTML/CSS,
+        já o V-IF é uma *renderização* condicional. Caso a
+        expressão seja verdadeira uma *renderização* acontece
+        e se retornar falso ele não é renderizado.
 
-      <!-- v-if e v-else -->
-      Idade: <input type="text" id="idade" @blur="setAge()" />
-      <br />
-      <!-- precisam estar no mesmo nível de escopo-->
-      <span v-if="age < 18">Menor de idade</span>
-      <span v-else>Maior de idade</span>
-      <br />
-
-      <!-- 
-        Quando um elemento HTML possui uma condição v-if para ser ou não exibido,
-        entra na interpretação do Vue que esse elemento sequer será renderizado
-        no arquivo DOM se a condição não for atendida, são simplesmente ignoradas.
+        O V-Show é muito mais rápido, pois só muda a propriedade
+        'display'. Se o trecho HTML não impactar na segurança,
+        é recomendado utilizar o V-Show.
       -->
-
-      <!-- v-if, v-else-if e v-else -->
-      Nota: <input type="text" id="grade" @blur="setGrade()" />
-      <br />
-      <span v-if="grade == ''">Digite uma nota</span>
-      <span v-else-if="grade >= 6 && grade <= 10">Aprovado</span>
-      <span v-else-if="grade >= 5 && grade < 6">Recuperação</span>
-      <span v-else-if="grade >= 0 && grade < 5">Reprovado</span>
-      <span v-else>Valor inválido</span>
+      <p @mouseover="showTooltip = true" @mouseout="showTooltip = false">
+        Exemplo tooltip
+      </p>
+      <div v-show="showTooltip">
+        <h3>Siga essa dica</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae,
+          voluptatibus consequuntur id eligendi architecto asperiores!
+        </p>
+      </div>
     </div>
     <script>
       options = {
         el: "#app",
         data: {
-          balance: 500.0,
-          showBalance: true,
-          age: 0,
-          grade: 0,
+          showTooltip: false,
         },
-        methods: {
-          setAge() {
-            this.age = idade.value;
-          },
-
-          setGrade() {
-            this.grade = grade.value;
-          },
-        },
+        methods: {},
       };
 
       const vue = new Vue(options);
