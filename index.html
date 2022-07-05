@@ -9,16 +9,27 @@
   </head>
   <body>
     <div id="app">
-      <p v-text="lorem"></p>
+      <p v-once>Saldo inicial: {{ balance }}</p>
+      <p>Saldo atualizado: {{ balance }}</p>
+      <input type="text" id="valor" />
+      <button @click="creditar()">Creditar</button>
+      <button @click="debitar()">Debitar</button>
     </div>
     <script>
       options = {
         el: "#app",
         data: {
-          lorem:
-            "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae quia unde velit? Iste, repellendus ea enim quam nihil blanditiis facere necessitatibus commodi, voluptatum esse itaque sapiente reiciendis explicabo labore aut?",
+          balance: 10,
         },
-        methods: {},
+        methods: {
+          creditar() {
+            this.balance += Number(valor.value);
+          },
+
+          debitar() {
+            this.balance -= Number(valor.value);
+          },
+        },
       };
 
       const vue = new Vue(options);
