@@ -9,63 +9,39 @@
   </head>
   <body>
     <div id="app">
-      <!-- 
-        * Two-way binding: *
-        Vue p/ Template -> :value
-        Template p/ Vue -> @keyup
-      -->
-      <!-- <input type="text" :value="paciente" @keyup="setPaciente($event)" /> -->
-
-      <!-- ! v-model faz o two-way binding diretamente -->
-      <input type="text" v-model="paciente" />
-      {{paciente}}
-
-      <!----------------------------------->
-      <hr />
-
-      <!-- O Vue entende que o input radio com o mesmo v-model pertence ao mesmo grupo -->
-      <input type="radio" value="f" v-model="sexo" />Feminino
-      <input type="radio" value="m" v-model="sexo" />Masculino <br />
-      {{sexo}}
-
-      <!----------------------------------->
-      <hr />
-
-      <select v-model="plano">
-        <option value="" disabled>Selecione um plano</option>
-        <!-- Recomendação do Vue sobre "select". (value="") e (disabled). Vira tipo um placeholder -->
-        <option value="1">Básico 1</option>
-        <option value="2">Básico 2</option>
-        <option value="3">Básico 3</option>
-      </select>
-
-      {{plano}}
-
-      <!----------------------------------->
-      <hr />
-
-      <input type="checkbox" value="100" v-model="doencas" />Asma
-      <input type="checkbox" value="101" v-model="doencas" />Rinite
-      <input type="checkbox" value="102" v-model="doencas" />Sinusite
-      <input type="checkbox" value="103" v-model="doencas" />Covid-19 <br />
-      {{doencas}}
+      <span>Paciente: </span><input type="text" v-model="paciente" />
+      <br />
+      <ul>
+        <li v-for="p in lista">{{p.nome}}</li>
+      </ul>
     </div>
     <script>
       options = {
         el: "#app",
         data: {
-          paciente: "Hassan Kuntze",
-          sexo: "",
-          plano: "",
-          doencas: [],
+          paciente: "",
+          pacientes: [
+            { nome: "Hassan", idade: 23 },
+            { nome: "Joana", idade: 61 },
+            { nome: "Miguel", idade: 12 },
+            { nome: "Marco", idade: 21 },
+            { nome: "João", idade: 43 },
+            { nome: "Jonas", idade: 12 },
+          ],
+          lista: [],
         },
-        methods: {
-          //Só é utilizado para o keyup. O V-model faz o processo diretamente
-          setPaciente(e) {
-            this.paciente = e.target.value;
+        methods: {},
+        computed: {},
+        watch: {
+          //Precisamos definir métodos nomeados iguais aos atributos que serão observados
+          //Ao observar uma mudança podem ser capturados dois valores: o novo valor e o antigo
+          paciente(newValue, oldValue) {
+            console.log(newValue, oldValue);
+            this.lista = this.pacientes.filter((pac) =>
+              pac.nome.toLowerCase().match(newValue.toLowerCase())
+            );
           },
         },
-        computed: {},
       };
 
       const vue = new Vue(options);
