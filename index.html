@@ -9,74 +9,43 @@
   </head>
   <body>
     <div id="app">
-      <a
-        href="https://hklearn.herokuapp.com/"
-        target="_blank"
-        @click="preventDef($event)"
+      <input type="text" id="texto" />
+      <button @click="selectChild()">Botão</button>
+      <select id="opcoes">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <p
+        id="paragrafo"
+        style="
+          border: 1px solid black;
+          margin: 15px;
+          padding: 15px;
+          border-radius: 10px;
+          box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.4);
+          text-align: center;
+          font-weight: bold;
+          font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+          font-size: 27px;
+        "
       >
-        Link
-      </a>
-      <br />
-      <!-- É o mesmo que: -->
-      <a
-        href="https://hklearn.herokuapp.com/"
-        target="_blank"
-        @click.prevent="preventDef2()"
-      >
-        Link
-      </a>
-      <br />
-      <button @click.once="once()">Único</button>
-      <p>Contador: {{count}}</p>
-
-      <!-- Encadear modificadores -->
-
-      <form @submit.prevent.once="preventOnce()">
-        <button type="submit">Enviar</button>
-      </form>
-      <p>Formulário: {{form}}</p>
-      <br />
-      <!-- Modificador @keyup."tecla" significa que só dispara se o dígito for 't'-->
-      <input type="text" @keyup.t="captureKey($event)" />
-      <p>Teclas: {{ key }}</p>
-
-      <!-- Modificador @keyup."tecla" significa que só dispara se o dígito for 'Enter'-->
-      <input type="text" @keyup.Enter="captureKey($event)" />
-      <p>Teclas: {{ key }}</p>
-
-      <!-- Modificador @keyup."tecla" significa que só dispara se o dígito for 'Shift' seguido de 'Enter'-->
-      <input type="text" @keyup.Shift.Enter="captureKey($event)" />
-      <p>Teclas: {{ key }}</p>
+        Parágrafo
+      </p>
     </div>
     <script>
       options = {
         el: "#app",
-        data: {
-          msg: "",
-          count: 0,
-          form: "",
-          key: "",
-        },
+        data: {},
         methods: {
-          preventDef(event) {
-            event.preventDefault();
-            this.msg = "Default behavior";
-          },
-
-          preventDef2() {
-            this.msg = "Default behavior";
-          },
-
-          once() {
-            this.count++;
-          },
-
-          preventOnce() {
-            this.form = "Prevent once";
-          },
-
-          captureKey(event) {
-            this.key += event.key;
+          //Selecionar elementos filhos através do id:
+          //No Vue basta passar o id de forma direta
+          selectChild() {
+            //console.log(texto.value);
+            //console.log(opcoes.value);
+            console.log(paragrafo.style);
           },
         },
       };
