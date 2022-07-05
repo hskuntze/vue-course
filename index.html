@@ -9,13 +9,14 @@
   </head>
   <body>
     <div id="app">
-      <div v-html="elementoHTML"></div>
+      <p v-text="lorem"></p>
     </div>
     <script>
       options = {
         el: "#app",
         data: {
-          elementoHTML: '<a href="https://hklearn.herokuapp.com/">Site</a>',
+          lorem:
+            "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae quia unde velit? Iste, repellendus ea enim quam nihil blanditiis facere necessitatibus commodi, voluptatum esse itaque sapiente reiciendis explicabo labore aut?",
         },
         methods: {},
       };
